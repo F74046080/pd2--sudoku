@@ -7,6 +7,7 @@ class Sudoku{
 		void giveQuestion();
 		void readIn();
 		void solve();
+		void ck();
 		bool check(int);
 		void backtrace(int);
 		void changeNum(int,int);
