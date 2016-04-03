@@ -27,7 +27,7 @@ void Sudoku::readIn(){
 		if(cnt==82) break;
 	}
 }
- void Sudoku::solve(){
+void Sudoku::solve(){
 	 ans=0;
 	  ck();
 	  backtrace(0);
@@ -41,9 +41,9 @@ void Sudoku::readIn(){
 				 }
 	  }
 	  else cout<<'0'<<endl;
-	   }
+}
 
- void Sudoku::ck(){
+void Sudoku::ck(){
 	 int tmpp=0,map3[81],imp1[81][9],imp2[81][9],imp3[81][9];
 	  k=0;
 	   for(i=0;i<9;i++){
@@ -52,69 +52,67 @@ void Sudoku::readIn(){
 				    k++;
 					  }
 			  }
-	   for(i=0;i<81;i++){
-		     for(j=0;j<9;j++){
-				  imp1[i][j]=0;
-				   imp2[i][j]=0;
-				    imp3[i][j]=0;
-					   }
-			  }
+	   	for(i=0;i<81;i++){
+			for(j=0;j<9;j++){
+				imp1[i][j]=0;
+				imp2[i][j]=0;
+				imp3[i][j]=0;
+			}
+		}
 	    for(i=0;i<81;i++){
-			  for(j=0;j<9;j++){
-				   if(map3[(i/9)*9+j]){
-					     
-					     imp1[i][map3[(i/9)*9+j]-1]++;
-						  }
-				    if(map3[j*9+i%9]){
-						  
-						  imp2[i][map3[j*9+i%9]-1]++;
-						   }
-					tmpp=map3[((i/(9*3))*3+j/3)*9 + ((i%9)/3)*3+j%3] ;
-					if(tmpp){
-						  imp3[i][tmpp-1]++;
-					}
-					 }
-			   }
+			for(j=0;j<9;j++){
+				if(map3[(i/9)*9+j]){			     
+					imp1[i][map3[(i/9)*9+j]-1]++;
+				}
+				if(map3[j*9+i%9]){	  
+					imp2[i][map3[j*9+i%9]-1]++;
+				}
+				tmpp=map3[((i/(9*3))*3+j/3)*9 + ((i%9)/3)*3+j%3] ;
+				if(tmpp){
+					imp3[i][tmpp-1]++;
+				}
+			}
+		}
 		for(i=0;i<81;i++){
 			 for(j=0;j<9;j++){
 				 if(imp1[i][j]>1||imp2[i][j]>1||imp3[i][j]>1){
 					 cout<<'0'<<endl;
-					  exit(0);
+					 exit(0);
 				 }
 			 }
 		}
-		 }
+}
 
- bool Sudoku::check(int count){
-	 int rr = count / 9;
-	 int cc = count % 9;
-	 int j;
-	 for(j = 0; j < 9; ++j){
-		  if(map[rr][j] == map[rr][cc] && j != cc){
+bool Sudoku::check(int count){
+	int rr=count/9;
+	int cc=count%9;
+	int j,k;
+	for(j=0;j<9;j++){
+		if(map[rr][j] == map[rr][cc] && j != cc){
 			  return false;
-			   }
+		}
 	 }
-	 for(j = 0; j < 9; ++j){
-		  if(map[j][cc] == map[rr][cc] && j != rr){
-			  return false;
-			   }
+	 for(j=0;j<9;j++){
+		if(map[j][cc] == map[rr][cc] && j != rr){
+			return false;
+		}
 	 }
-	 int tmp1 = rr / 3 * 3;
-	 int tmp2 = cc / 3 * 3;
-	 for(j = tmp1; j < tmp1 + 3;++j){
-		  for(int k = tmp2; k < tmp2 + 3; ++k){
-			      if(map[j][k] == map[rr][cc] && j != rr && k != cc    ){
+	 int tmp1=rr/3*3;
+	 int tmp2=cc/3*3;
+	 for(j=tmp1;j<tmp1+3;j++){
+		  for(k=tmp2;k<tmp2+3;k++){
+			      if(map[j][k]==map[rr][cc]&&j!=rr&&k!=cc){
 					   return false;
 				  }
-				   }
+		  }
 	 }
 	 return true;
-	  }
+}
 
 void Sudoku::backtrace(int count){
-	if(count == 81){
-		for(int i = 0; i < 9; ++i){
-			for(int j =  0; j < 9; ++j){
+	if(count==81){
+		for(int i=0;i<9;i++){
+			for(int j=0;j<9;j++){
 				map2[i][j]=map[i][j];
 			}
 		}
@@ -124,10 +122,10 @@ void Sudoku::backtrace(int count){
 		cout<<'2'<<endl;
 		exit(0);
 	}
-	int rr = count / 9;
-	int cc = count % 9;
+	int rr=count/9;
+	int cc=count%9;
 	if(map[rr][cc] == 0){
-		for(int i = 1; i <= 9; ++i){
+		for(int i=1;i<=9;i++){
 			map[rr][cc] = i;
 			if(check(count)){
 				backtrace(count+1);
